@@ -47,11 +47,25 @@ def process_news_data(news_data):
 
     return pd.DataFrame(processed_data)
 
-# Função para visualizar os dados em um gráfico de sentimento
+# Função para visualizar os dados em um gráfico de sentimento (tudo em streamlit aq)
 def plot_sentiment(data):
-    data['date'] = pd.to_datetime(data['date'], format='%Y%m%dT%H%M')
-    fig = px.line(data, x='date', y='sentiment', title='Sentimento ao longo do tempo', markers=True)
+    # Inspeciona as primeiras linhas para verificar o formato da data no ST
+    st.write("Primeiras linhas dos dados de data:")
+    st.write(data['date'].head())
+
+    # Converte o formato de data com uma tentativa de coerção para valores inválidos
+    data['date'] = pd.to_datetime(data['date'], format='%Y%m%dT%H%M', errors='coerce')
+
+    # Filtra qualquer linha onde a data seja inválida
+    data = data.dropna(subset=['date'])
+
+    # Exiba o DataFrame após a conversão
+    st.write("Dados após a conversão da data:")
+    st.write(data.head())
+
+    fig = px.line(data,  x='date', y='sentiment', title= 'Sentimento ao longo do tempo', markers=True)
     st.plotly_chart(fig)
+    
 
 # Função principal
 def main():
