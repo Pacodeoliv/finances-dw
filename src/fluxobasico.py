@@ -47,32 +47,14 @@ def process_news_data(news_data):
 
     return pd.DataFrame(processed_data)
 
-# Função para visualizar os dados em um gráfico de sentimento (tudo em streamlit aq)
-def plot_sentiment(data):
-    # Inspeciona as primeiras linhas para verificar o formato da data no ST
-    st.write("Primeiras linhas dos dados de data:")
-    st.write(data['date'].head())
 
-    # Converte o formato de data com uma tentativa de coerção para valores inválidos
-    data['date'] = pd.to_datetime(data['date'], format='%Y%m%dT%H%M', errors='coerce')
-
-    # Filtra qualquer linha onde a data seja inválida
-    data = data.dropna(subset=['date'])
-
-    # Exiba o DataFrame após a conversão
-    st.write("Dados após a conversão da data:")
-    st.write(data.head())
-
-    fig = px.line(data,  x='date', y='sentiment', title= 'Sentimento ao longo do tempo', markers=True)
-    st.plotly_chart(fig)
-    
 
 # Função principal
 def main():
     st.title("Market News & Sentiment Dashboard")
     
     # Inputs do usuário
-    tickers = st.text_input("Digite os tickers (ex: AAPL, TSLA, CRYPTO:BTC)", value="AAPL")
+    tickers = st.text_input("Digite os tickers (ex: AAPL, TSLA, CRYPTO:BTC)", value="")
     topics = st.text_input("Digite os tópicos (ex: technology, earnings)", value="technology")
     time_from = st.text_input("Data inicial (YYYYMMDDTHHMM)", value="20240101T0000")
     time_to = st.text_input("Data final (YYYYMMDDTHHMM)", value=datetime.now().strftime("%Y%m%dT%H%M"))
@@ -83,7 +65,7 @@ def main():
         if 'feed' in news_data:
             df = process_news_data(news_data)
             st.write(df)
-            plot_sentiment(df)
+           # plot_sentiment(df)
         else:
             st.error("Nenhum dado encontrado ou erro na API")
 
