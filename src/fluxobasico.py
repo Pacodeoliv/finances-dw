@@ -29,7 +29,18 @@ def get_news_data(tickers=None, topics=None, time_from=None, time_to=None, limit
         params['time_to'] = time_to
 
     response = requests.get(NEWS_ENDPOINT, params=params)
+    
+
+    # Exibir os parâmetros da solicitação 13:02 04SEP
+    st.write("Parâmetros da solicitação:", params)
+
+    response = requests.get(NEWS_ENDPOINT, params=params)
+    
+    # Exibir a resposta bruta da API 13:02 04SEP
+    st.write("Resposta da API:", response.json())
+
     return response.json()
+
 
 # Função para processar o JSON da API
 def process_news_data(news_data):
