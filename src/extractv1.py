@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 import os
 load_dotenv
 
+
+# Projeto 1, coletar dados da api que me trás coisas da bolsa de valores e salvar em csv. (Quero aprender como fazer request em API e como escrever arquivos)
+
 alphaapikey = os.getenv('API_KEY')
 
 if alphaapikey is True:
