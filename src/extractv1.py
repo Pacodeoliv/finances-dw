@@ -14,3 +14,20 @@ if alphaapikey :
 else:
     raise ValueError("A chave da API não foi encontrada. Verifique se o arquivo está configurado corretamente")
 
+
+# Define qual key usar, formato de saida doque requisitar no TS
+ts = TimeSeries(key=alphaapikey, output_format='pandas')
+
+# Realizar a busca pelo simbolo entre 'XXXX'
+dataBBAS, meta_dataBBAS = ts.get_symbol_search('banco do brasil')
+
+def dadosBBAS():
+     if dataBBAS.empty:
+        print("Nenhum dado foi retornado.")
+     else:  
+        print("Dados:")
+        print(dataBBAS)
+        print("\nMeta Dados (Dados sobre dados):")
+        print(meta_dataBBAS)
+
+        return dadosBBAS
